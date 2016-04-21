@@ -126,16 +126,16 @@ else
 fi
 
 #r10k puppetfile syntax check
-if hash r10k >/dev/null 2>&1; then
-  if [[ "$changedfile" = "Puppetfile" ]]; then
+if [[ "$changedfile" = "Puppetfile" ]]; then
+  if hash r10k >/dev/null 2>&1; then
         "${subhook_root}/r10k_syntax_check.sh"
         RC=$?
         if [[ "$RC" -ne 0 ]]; then
                 failures=$((failures + 1))
         fi
+  else
+      echo "r10k not installed. Skipping r10k Puppetfile test..."
   fi
-else
-    echo "r10k not installed. Skipping r10k Puppetfile test..."
 fi
 
 #summary
